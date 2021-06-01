@@ -27,7 +27,11 @@ class MainActivity : AppCompatActivity() {
 
             val originalBitmap = originalDeferred.await()
 
-            loadImage(originalBitmap)
+            val filterDeferred = coroutineScope.async(Dispatchers.IO) {Filter.apply(originalBitmap)}
+
+            val bitmapAfterFilter = filterDeferred.await()
+
+            loadImage(bitmapAfterFilter)
         }
     }
 
